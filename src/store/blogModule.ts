@@ -34,7 +34,9 @@ export class BlogModule extends VuexModule {
     public async getPosts() {
         this.setLoadingStatus('loading');
         try {
-            const response = await axios.get<Blog[]>('/api/blog');
+            const response = await axios.get<Blog[]>(
+                'http://localhost:3000/api/blog'
+            );
             this.setPosts(response.data);
         } catch (err) {
             // display error message

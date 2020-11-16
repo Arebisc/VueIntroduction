@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <button @click="loadBlogPosts">Get posts</button>
         <ul>
             <li v-for="post in posts" :key="post.id">
                 {{ post.text }}
@@ -25,8 +26,8 @@ export default class Home extends Vue {
         return blogModule.publishedPosts;
     }
 
-    private loadBlogPosts() {
-        return blogModule.getPosts();
+    private async loadBlogPosts() {
+        return await blogModule.getPosts();
     }
 }
 </script>
