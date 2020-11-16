@@ -1,6 +1,5 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-class-modules';
 import axios from 'axios';
-import { Store } from 'vuex';
 
 export interface Blog {
     id: number;
@@ -10,18 +9,15 @@ export interface Blog {
 
 @Module
 export class BlogModule extends VuexModule {
-    public constructor(store: Store<any>) {
-        super({
-            name: 'BlogModule',
-            store,
-        });
-    }
-
     private loadingStatus = 'notLoading';
-    private blogPosts: Blog[] = [];
+    private blogPosts: Blog[] = [
+        { id: 1, text: 'text blog 1', published: true },
+        { id: 2, text: 'text blog 2', published: true },
+        { id: 3, text: 'text blog 3', published: false },
+    ];
 
     public get publishedPosts() {
-        return this.blogPosts;
+        return this.blogPosts.filter(x => x.published);
     }
 
     @Mutation
@@ -35,11 +31,15 @@ export class BlogModule extends VuexModule {
     }
 
     @Action
-    public getPosts() {
+    public async getPosts() {
         this.setLoadingStatus('loading');
-        axios.get('/api/blog').then(response => {
+        try {
+            const response = await axios.get<Blog[]>('/api/blog');
+            this.setPosts(response.data);
+        } catch (err) {
+            // display error message
+        } finally {
             this.setLoadingStatus('notLoading');
-            this.setPosts(response.data.posts);
-        });
+        }
     }
 }
