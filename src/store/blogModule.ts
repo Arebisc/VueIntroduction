@@ -1,5 +1,7 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-class-modules';
 import axios from 'axios';
+import { FooInterface } from '@/abstract/bloggingModule/FooInterface';
+import { $inject } from '@vanroeybe/vue-inversify-plugin';
 
 export interface Blog {
     id: number;
@@ -9,6 +11,9 @@ export interface Blog {
 
 @Module
 export class BlogModule extends VuexModule {
+    @$inject(nameof<FooInterface>())
+    private readonly foo!: FooInterface;
+
     private loadingStatus = 'notLoading';
     private blogPosts: Blog[] = [
         { id: 1, text: 'text blog 1', published: true },
@@ -33,6 +38,7 @@ export class BlogModule extends VuexModule {
     @Action
     public async getPosts() {
         this.setLoadingStatus('loading');
+        this.foo.bar();
         try {
             const response = await axios.get<Blog[]>(
                 'http://localhost:3000/api/blog'
