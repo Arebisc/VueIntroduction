@@ -1,5 +1,32 @@
 <template>
     <v-app>
+        <v-navigation-drawer app>
+            <v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title class="title">
+                        NextIT
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                        Demo application
+                    </v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-divider></v-divider>
+
+            <v-list dense nav>
+                <v-list-item v-for="item in items" :key="item.title" link>
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+
         <v-app-bar app color="primary" dark>
             <div class="d-flex align-center">
                 <v-img
@@ -34,8 +61,12 @@
         </v-app-bar>
 
         <v-main>
-            <router-view></router-view>
+            <v-container fluid>
+                <router-view></router-view>
+            </v-container>
         </v-main>
+
+        <v-footer app></v-footer>
     </v-app>
 </template>
 
@@ -43,5 +74,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class App extends Vue {}
+export default class App extends Vue {
+    private items = [{ title: 'Dashboard', icon: 'mdi-view-dashboard' }];
+}
 </script>
