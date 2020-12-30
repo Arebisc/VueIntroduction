@@ -1,6 +1,11 @@
 <template>
     <div class="blog">
-        <h1>This will be a blog page</h1>
+        <h1>Blog</h1>
+        <v-data-table
+            :headers="tableHeaders"
+            :items="tableData"
+            :items-per-page="5"
+        ></v-data-table>
     </div>
 </template>
 
