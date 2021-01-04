@@ -34,10 +34,32 @@ export class BlogModule extends VuexModule {
         else {
             console.error('Cannot load posts');
         }
-    } 
+    }
+
+    @Action
+    public async saveNewPost(blogPost: BlogPost) {
+        const url = 'http://localhost:3000';
+        const response = await axios.post<BlogPost>(url, blogPost, {
+            headers: { "Access-Control-Allow-Origin": "*" },
+            withCredentials: false
+        });
+
+        if (response.status === 200) {
+            const post = response.data;
+            this.addNewPost(post);
+        }
+        else {
+            console.error('Cannot save new post');
+        }
+    }
 
     @Mutation
     private setPosts(posts: BlogPost[]) {
         this.posts = posts;
+    }
+
+    @Mutation
+    private addNewPost(post: BlogPost) {
+        this.posts.push(post);
     }
 }

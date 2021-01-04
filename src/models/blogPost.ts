@@ -1,8 +1,8 @@
 export interface BlogPost {
-    id: number;
-    title: string;
-    text: string;
-    author: string;
-    published: boolean;
+    id: number | undefined;
+    title: string | undefined;
+    text: string | undefined;
+    author: string | undefined;
+    published: boolean | undefined;
 }
 
