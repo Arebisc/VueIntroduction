@@ -53,6 +53,23 @@ export class BlogModule extends VuexModule {
         }
     }
 
+    @Action
+    public async editPost(blogPost: BlogPost) {
+        const url = `http://localhost:3000/${blogPost.id}`;
+        const response = await axios.put<BlogPost>(url, blogPost, {
+            headers: { "Access-Control-Allow-Origin": "*" },
+            withCredentials: false
+        });
+
+        if (response.status === 200) {
+            const post = response.data;
+            this.changeExistingPost(post);
+        }
+        else {
+            console.error('Cannot save new post');
+        }
+    }
+
     @Mutation
     private setPosts(posts: BlogPost[]) {
         this.posts = posts;
@@ -61,5 +78,11 @@ export class BlogModule extends VuexModule {
     @Mutation
     private addNewPost(post: BlogPost) {
         this.posts.push(post);
+    }
+
+    @Mutation
+    private changeExistingPost(post: BlogPost) {
+        const postIndex = this.posts.findIndex(x => x.id === post.id);
+        this.posts[postIndex] = post;
     }
 }

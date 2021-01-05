@@ -5,7 +5,13 @@
             :headers="tableHeaders"
             :items="tableData"
             :items-per-page="5"
-        ></v-data-table>
+        >
+            <template v-slot:item.actions="{ item }">
+                <v-icon @click="editPost(item)" class="mr-2">
+                    mdi-pencil
+                </v-icon>
+            </template>
+        </v-data-table>
         <v-dialog v-model="dialog" width="500">
             <v-card>
                 <v-card-title class="headline grey lighten-2">

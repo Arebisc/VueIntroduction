@@ -22,7 +22,12 @@ export default class Home extends Vue {
         { text: 'Title', value: 'title' },
         { text: 'Text snippet', value: 'text' },
         { text: 'Author', value: 'author' },
-        { text: 'Published', value: 'published' }
+        { text: 'Published', value: 'published' },
+        {
+            text: 'Actions',
+            value: 'actions',
+            align: 'center'
+        },
     ];
 
     private get tableData() {
@@ -38,8 +43,18 @@ export default class Home extends Vue {
     }
 
     private async saveNewPost() {
-        await blogModule.saveNewPost(this.blogPost);
+        if (this.blogPost.id) {
+            await blogModule.editPost(this.blogPost);
+        }
+        else {
+            await blogModule.saveNewPost(this.blogPost);
+        }
         this.dialog = false;
+    }
+
+    private editPost(post: BlogPost) {
+        this.blogPost = post;
+        this.dialog = true;
     }
 }
 
