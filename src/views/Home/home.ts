@@ -63,5 +63,11 @@ export default class Home extends Vue {
         this.blogPost = post;
         this.dialog = true;
     }
+
+    private async deletePost(post: BlogPost) {
+        if (confirm("Are you sure?")) {
+            await blogModule.deletePost(post);
+        }
+    }
 }
 

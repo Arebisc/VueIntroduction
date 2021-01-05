@@ -10,6 +10,9 @@
                 <v-icon @click="editPost(item)" class="mr-2">
                     mdi-pencil
                 </v-icon>
+                <v-icon @click="deletePost(item)" class="mr-2">
+                    mdi-delete
+                </v-icon>
             </template>
         </v-data-table>
         <v-dialog v-model="dialog" width="500">

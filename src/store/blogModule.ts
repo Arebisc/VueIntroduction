@@ -66,6 +66,23 @@ export class BlogModule extends VuexModule {
             this.changeExistingPost(post);
         }
         else {
+            console.error('Cannot edit post');
+        }
+    }
+
+    @Action
+    public async deletePost(blogPost: BlogPost) {
+        const url = `http://localhost:3000/${blogPost.id}`;
+        const response = await axios.delete<BlogPost>(url, {
+            headers: { "Access-Control-Allow-Origin": "*" },
+            withCredentials: false
+        });
+
+        if (response.status === 200) {
+            const removedPost = response.data;
+            this.removePost(removedPost);
+        }
+        else {
             console.error('Cannot save new post');
         }
     }
@@ -84,5 +101,11 @@ export class BlogModule extends VuexModule {
     private changeExistingPost(post: BlogPost) {
         const postIndex = this.posts.findIndex(x => x.id === post.id);
         this.posts[postIndex] = post;
+    }
+
+    @Mutation
+    private removePost(blogPost: BlogPost) {
+        const postIndex = this.posts.findIndex(x => x.id === blogPost.id);
+        this.posts.splice(postIndex, 1);
     }
 }
