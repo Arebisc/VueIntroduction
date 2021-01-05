@@ -1,6 +1,6 @@
 <template>
     <div class="blog">
-        <v-btn @click="showDialog">Add new post</v-btn>
+        <v-btn @click="showEmptyDialog">Add new post</v-btn>
         <v-data-table
             :headers="tableHeaders"
             :items="tableData"
@@ -28,7 +28,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="saveNewPost">
+                    <v-btn color="primary" text @click="savePost">
                         Save
                     </v-btn>
                 </v-card-actions>

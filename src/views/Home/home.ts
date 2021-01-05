@@ -38,11 +38,18 @@ export default class Home extends Vue {
         await blogModule.loadPosts();
     }
 
-    private showDialog() {
+    private showEmptyDialog() {
         this.dialog = true;
+        this.blogPost = {
+            author: undefined,
+            published: undefined,
+            id: undefined,
+            text: undefined,
+            title: undefined
+        };
     }
 
-    private async saveNewPost() {
+    private async savePost() {
         if (this.blogPost.id) {
             await blogModule.editPost(this.blogPost);
         }
